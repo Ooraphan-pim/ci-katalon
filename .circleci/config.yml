@@ -1,14 +1,9 @@
-version: 2
-jobs:
-  build:
-    docker:
-      - image: katalonstudio/katalon
-    steps:
-      - checkout
-      - run:
-          name: Execute Katalon Studio
-          command: katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
-      - store-test_results:
-          path: ./report
-      - store-artifacts:
-          path: ./report
+orbs:
+  katalon-studio: katalon/katalon-studio@23.0.11
+workflows:
+    example-workflow:
+      jobs:
+        - katalon-studio/run:
+            version: '8.0.1' 
+            KATALON_API_KEY: f4a5d939-090c-4dfe-9a28-9e77b0bf182b 
+            command_arguments:  -retry=0 -testSuitePath="Test Suites/student/user_login" -executionProfile="default" -browserType="Chrome" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true 
